@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>App Star Wars</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    </head>
+    <body>
+        
+        <div class="container" id="app" style="max-width: 500px;">
+        
+            <div class="card text-uppercase"  style="max-width: 500px; margin-top: 8%;">
+                <div class="card-header text-center">
+                    <h1>PLANET {{ planet.name }}</h1>
+                </div>
+                
+                <div class="card-body">
+                    
+                    <table class="table">
+                        <tr>
+                            <td>Population: {{ planet.population }}</td>
+                        </tr>
+                        <tr>
+                            <td>Climate: {{ planet.climate }}</td>
+                        </tr>
+                        <tr>
+                            <td>Terrain: {{ planet.terrain }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Featured in {{ films }} films</td>
+                        </tr>
+                    </table>
+                    
+                </div>
+                
+            </div>
+            
+            <button class="btn btn-primary" @click="getData()" style="margin-top: 20px; margin-left: 40%">Next</button>
+            
+        </div>
+        
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        
+        <script>
+            var app = new Vue({
+                el: '#app',
+                data: {
+                    planet: {},
+                    films: {}
+                }, methods: {
+                    getData(){
+                        axios.get('process.php').then(function (response) {
+                            console.log(response.data);
+                            app.planet = response.data;
+                            app.films = (app.planet.films).length
+                          })
+                    }
+                }
+              })
+        </script>
+    </body>
+</html>
